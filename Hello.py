@@ -61,7 +61,7 @@ convo=model.start_chat(history=[
 },
 {
     "role":"model",
-    "parts":["Deez nuts can't fly either"]
+    "parts":["Deez can't fly either"]
     
 }
 ])
