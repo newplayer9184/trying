@@ -14,9 +14,57 @@
 
 import streamlit as st
 from streamlit.logger import get_logger
-
+import google.generativeai as genai
+genai.configure(api_key=st.secrets["gemini_api_key"])
 LOGGER = get_logger(__name__)
 
+model= genai.GenerativeModel(model_name="gemini-1.0-pro")
+convo=model.start_chat(history=[
+    {
+    "role":"user",
+    "parts":["Hello! What is your name?"]
+},
+{
+    "role":"model",
+    "parts":["I am deez"]
+    
+},
+   {
+    "role":"user",
+    "parts":["How old are you"]
+},
+{
+    "role":"model",
+    "parts":["I am deez"]
+    
+} ,  {
+    "role":"user",
+    "parts":["Why did Adolf Hitler attack the soviet union"]
+},
+{
+    "role":"model",
+    "parts":["I am deez"]
+    
+},
+   {
+    "role":"user",
+    "parts":["Hello! What is deez?"]
+},
+{
+    "role":"model",
+    "parts":["deez nuts"]
+    
+},
+{
+    "role":"user",
+    "parts":["i cannot fly"]
+},
+{
+    "role":"model",
+    "parts":["Deez nuts can't fly either"]
+    
+}
+])
 
 def run():
     st.set_page_config(
@@ -27,7 +75,7 @@ def run():
     st.write("# Welcome my guy! 👋")
 
     st.sidebar.success("Select a demo above.")
-
+    
     st.markdown(
         """
         Streamlit is an open-source app framework built specifically for
@@ -45,7 +93,13 @@ def run():
         - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
     """
     )
+    input_text=st.text_area("input: ")
+    chat_button=st.button("Send")
 
+    if chat_button and input_text.strip()!="":
+        with st.spinner("loading"):
+            convo.send_message(input_text)
+            st.success(convo.last.text)
 
 if __name__ == "__main__":
     run()
