@@ -54,6 +54,14 @@ convo=model.start_chat(history=[
     "role":"model",
     "parts":["deez nuts"]
     
+},{
+    "role":"user",
+    "parts":["Who is deez?"]
+},
+{
+    "role":"model",
+    "parts":["deez nuts"]
+    
 },
 {
     "role":"user",
